@@ -2,13 +2,14 @@ import java.nio.file.{Paths, Files}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs._
 import java.io._
-import spark.implicits._
+import org.apache.spark.sql.SparkSession
 
 object ReadParquetFile {
   def main(args : Array[String]) : Unit = {
     if (args.length == 0) {
         return println("dude, i need at least one parameter")
     }
+    val spark = SparkSession.builder.appName("Read Parquet File Application").getOrCreate()
     var pathFile = ""
     try
     { 
@@ -35,13 +36,14 @@ object ReadParquetFile {
     val folderPath = currentDirectory+"/"+folderName
     new java.io.File(folderPath).mkdirs
     // run function compute
-    totalUser(folderPath)
-    sumGender(folderPath)
-    sumAge(folderPath)
+    totalUser(folderPath, spark)
+    sumGender(folderPath, spark)
+    sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
   }
   
-  def sumGender(newFolder: String): Unit = {
+  def sumGender(newFolder: String, spark: SparkSession): Unit = {
+    import spark.implicits._
     val userByGender = spark.sql("""
       SELECT COALESCE(NULLIF(gender,''),'Unknow') as gender, count(*) as reg_count FROM parquetFile GROUP BY gender ORDER BY gender DESC
     """)
@@ -60,7 +62,8 @@ object ReadParquetFile {
     userByGender.unpersist()
   }
 
-  def sumAge(newFolder: String): Unit = {
+  def sumAge(newFolder: String, spark: SparkSession): Unit = {
+    import spark.implicits._
     val userByAge = spark.sql(
       """
       SELECT age_range, reg_count
@@ -97,6 +100,7 @@ object ReadParquetFile {
         ORDER BY seq
       """
     )
+    
     //create header for csv
     val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")
     // delete file if existed
@@ -112,7 +116,7 @@ object ReadParquetFile {
     userByAge.unpersist()
   }
 
-  def totalUser(newFolder: String): Unit = {
+  def totalUser(newFolder: String, spark: SparkSession): Unit = {
     val totalUser = spark.sql("SELECT count(registration_dttm) as total_user FROM parquetFile").first()
     val result =  "Total user registered: " + totalUser.get(0)
     // create text file and write result to it

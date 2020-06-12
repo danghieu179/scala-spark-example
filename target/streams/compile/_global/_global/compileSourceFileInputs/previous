@@ -1,0 +1,1 @@
+["sbt.Task[scala.collection.immutable.Map[java.lang.String, scala.collection.Seq[scala.Tuple2[java.nio.file.Path, sbt.nio.FileStamp]]]]",{"2.12.10":{"hashes":[["/Users/nguyendanghieu/Downloads/Project/scala-spark-example/src/main/scala/ReadParquetFile.scala","e9d5371d7058693c10f29757229bccd7d8e4714f"]],"lastModifiedTimes":[]}}]
