@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/nguyendanghieu/Downloads/Project/scala-spark-example/src/main/scala/ReadParquetFile.scala:51:49: value toDF is not a member of Seq[(String, String)][0m
-[0m[[0m[31merror[0m] [0m[0m    val headerDF = Seq(("gender", "reg_count")).toDF("gender", "reg_count")[0m
-[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/nguyendanghieu/Downloads/Project/scala-spark-example/src/main/scala/ReadParquetFile.scala:103:52: value toDF is not a member of Seq[(String, String)][0m
-[0m[[0m[31merror[0m] [0m[0m    val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")[0m
-[0m[[0m[31merror[0m] [0m[0m                                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/nguyendanghieu/Downloads/Project/scala-spark-example/src/main/scala/ReadParquetFile.scala:44:5: not found: value spark[0m
+[0m[[0m[31merror[0m] [0m[0m    spark.stop()[0m
+[0m[[0m[31merror[0m] [0m[0m    ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

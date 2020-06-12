@@ -15,7 +15,7 @@ object ReadParquetFile {
     { 
       // Read file from input
       pathFile = args(0)
-      val parquetFileDF =  spark.read.parquet(pathFile)
+      val parquetFileDF =  spark.read.parquet("file://"+args(0))
       //Parquet files can also be registered as tables and then used in SQL statements.
       parquetFileDF.createOrReplaceTempView("parquetFile")
     }
@@ -28,18 +28,20 @@ object ReadParquetFile {
         return println(s"Error: $error")
       }
     }
-    // Convert the path string to a Path object and get the "base name" from that path.
-    val fileName = Paths.get(pathFile).getFileName            
+    // // Convert the path string to a Path object and get the "base name" from that path.
+    val fileName = Paths.get(pathFile).getFileName          
     val folderName = fileName.toString.split("\\.")(0)
     // Create new folder for contain report files
     val currentDirectory = new java.io.File(".").getCanonicalPath
     val folderPath = currentDirectory+"/"+folderName
     new java.io.File(folderPath).mkdirs
+    println(folderPath)
     // run function compute
     totalUser(folderPath, spark)
     sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
+    spark.stop()
   }
   
   def sumGender(newFolder: String, spark: SparkSession): Unit = {
