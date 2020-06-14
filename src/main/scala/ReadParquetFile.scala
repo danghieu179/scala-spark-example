@@ -11,6 +11,7 @@ object ReadParquetFile {
     }
     val spark = SparkSession.builder.appName("Read Parquet File Application").getOrCreate()
     var pathFile = ""
+    println(args(0))
     try
     { 
       // Read file from input
