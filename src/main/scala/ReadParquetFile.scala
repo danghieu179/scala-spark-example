@@ -36,8 +36,8 @@ object ReadParquetFile {
     val folderPath = "hdfs:///user/hadoop/"+folderName
     println(folderPath)
     // run function compute
-    // totalUser(folderPath, spark)
-    // sumGender(folderPath, spark)
+    totalUser(folderPath, spark)
+    sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
@@ -57,7 +57,7 @@ object ReadParquetFile {
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    headerDF.union(userByGender).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/gender")
+    headerDF.union(userByGender).coalesce(1).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/gender")
     // merge file csv
     // merge(mergeFindGlob, mergedFileName )
     // userByGender.unpersist()
