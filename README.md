@@ -24,4 +24,22 @@ On URL master
 ![Screen Shot 4](evidence/evidence-4.png)
 ![Screen Shot 5](evidence/evidence-5.png)
 ![Screen Shot 6](evidence/evidence-6.png)
-## How to run with spark-submit on Yarn node cluster
+## How to run with spark-submit on 3-Node Hadoop Cluster
+1. Install 3-Node Hadoop Cluster and Spark: 
+ - https://www.linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/
+ - https://www.linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/
+ Note: 
+ - Need disable firewall
+ - Configuration each node:
+    - RAM: 2G
+    - HDD: 30GB
+    - Cores: 8
+ - Put file date to hdfs `hdfs dfs -put <myfile> <mypath>`
+ Example: `hdfs dfs -put /scala-spark-example/data_sample/userdata1.parquet datauser`
+2. Run `spark-submit  --deploy-mode cluster  --class "ReadParquetFile" <path to jar file> "<path hdfs file data>"
+ - Example `spark-submit  --deploy-mode cluster  --class "ReadParquetFile" /opt/scala-spark-example/target/scala-2.12/read-parquet-file_2.12-1.0.jar "hdfs:///user/hadoop/datauser/userdata3.parquet"`
+3. Result will save on hdfs of node-master
+ - Folder will have same with file name
+ ![Screen Shot 7](evidence/evidence-7.png)
+ ![Screen Shot 8](evidence/evidence-8.png)
+ 
