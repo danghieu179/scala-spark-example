@@ -38,7 +38,7 @@ object ReadParquetFile {
     new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
-    totalUser(folderPath, spark)
+    // totalUser(folderPath, spark)
     sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
