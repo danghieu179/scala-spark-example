@@ -40,7 +40,7 @@ object ReadParquetFile {
     println(folderPath)
     // run function compute
     // totalUser(folderPath, spark)
-    // sumGender(folderPath, spark)
+    sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
@@ -61,7 +61,7 @@ object ReadParquetFile {
     var mergeFindGlob  = outputFileName
     // userByGender.write.format("csv").mode("overwrite").save("hdfs:///user/hadoop/userdata")
     // add header and create file csv
-    headerDF.union(userByGender).write.format("csv").mode("overwrite").option("header", "false").save("hdfs:///user/hadoop/userdata")
+    headerDF.union(userByGender).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/gender")
     // merge file csv
     // merge(mergeFindGlob, mergedFileName )
     // userByGender.unpersist()
@@ -69,7 +69,6 @@ object ReadParquetFile {
 
   def sumAge(newFolder: String, spark: SparkSession): Unit = {
     import spark.implicits._
-    println("aaaaaaaaaa")
     val userByAge = spark.sql(
       """
       SELECT age_range, reg_count
@@ -106,7 +105,6 @@ object ReadParquetFile {
         ORDER BY seq
       """
     )
-    println("bbbbbb")
     //create header for csv
     val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")
     // delete file if existed
@@ -116,7 +114,7 @@ object ReadParquetFile {
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    headerDF.union(userByAge).write.format("csv").mode("overwrite").option("header", "false").save("hdfs:///user/hadoop/userdata")
+    headerDF.union(userByAge).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/age")
     // merge file csv
     // merge(mergeFindGlob, mergedFileName )
     // userByAge.unpersist()
