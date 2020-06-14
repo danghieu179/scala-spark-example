@@ -69,6 +69,7 @@ object ReadParquetFile {
 
   def sumAge(newFolder: String, spark: SparkSession): Unit = {
     import spark.implicits._
+    println("aaaaaaaaaa")
     val userByAge = spark.sql(
       """
       SELECT age_range, reg_count
@@ -105,7 +106,7 @@ object ReadParquetFile {
         ORDER BY seq
       """
     )
-    
+    println("bbbbbb")
     //create header for csv
     val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")
     // delete file if existed
@@ -115,7 +116,7 @@ object ReadParquetFile {
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    // headerDF.union(userByAge).write.mode("overwrite").format("csv").option("header", "false").save("hdfs:///user/hadoop/userdata")
+    // headerDF.union(userByAge).write.format("csv").mode("overwrite").option("header", "false").save("hdfs:///user/hadoop/userdata")
     // merge file csv
     // merge(mergeFindGlob, mergedFileName )
     // userByAge.unpersist()
