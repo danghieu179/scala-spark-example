@@ -12,31 +12,35 @@ object ReadParquetFile {
     val spark = SparkSession.builder.appName("Read Parquet File Application").getOrCreate()
     var pathFile = ""
     println(args(0))
-    try
-    { 
-      // Read file from input
-      pathFile = args(0)
-      val parquetFileDF =  spark.read.parquet(args(0))
-      //Parquet files can also be registered as tables and then used in SQL statements.
-      parquetFileDF.createOrReplaceTempView("parquetFile")
-    }
-    catch
-    {  
-      case ex: FileNotFoundException => {
-        return println("File not found")
-      }
-      case error: Exception => {
-        return println(s"Error: $error")
-      }
-    }
-    // // Convert the path string to a Path object and get the "base name" from that path.
-    val fileName = Paths.get(pathFile).getFileName          
-    val folderName = fileName.toString.split("\\.")(0)
-    // Create new folder for contain report files
-    val currentDirectory = new java.io.File(".").getCanonicalPath
-    val folderPath = currentDirectory+"/"+folderName
-    new java.io.File(folderPath).mkdirs
-    println(folderPath)
+    pathFile = args(0)
+    val parquetFileDF =  spark.read.parquet(args(0))
+    //Parquet files can also be registered as tables and then used in SQL statements.
+    parquetFileDF.createOrReplaceTempView("parquetFile")
+    // try
+    // { 
+    //   // Read file from input
+    //   pathFile = args(0)
+    //   val parquetFileDF =  spark.read.parquet(args(0))
+    //   //Parquet files can also be registered as tables and then used in SQL statements.
+    //   parquetFileDF.createOrReplaceTempView("parquetFile")
+    // }
+    // catch
+    // {  
+    //   case ex: FileNotFoundException => {
+    //     return println("File not found")
+    //   }
+    //   case error: Exception => {
+    //     return println(s"Error: $error")
+    //   }
+    // }
+    // // // Convert the path string to a Path object and get the "base name" from that path.
+    // val fileName = Paths.get(pathFile).getFileName          
+    // val folderName = fileName.toString.split("\\.")(0)
+    // // Create new folder for contain report files
+    // val currentDirectory = new java.io.File(".").getCanonicalPath
+    // val folderPath = currentDirectory+"/"+folderName
+    // new java.io.File(folderPath).mkdirs
+    // println(folderPath)
     // run function compute
     // totalUser(folderPath, spark)
     // sumGender(folderPath, spark)
