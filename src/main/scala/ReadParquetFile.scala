@@ -34,7 +34,7 @@ object ReadParquetFile {
     val folderName = fileName.toString.split("\\.")(0)
     // Create new folder for contain report files
     val currentDirectory = new java.io.File(".").getCanonicalPath
-    val folderPath = currentDirectory+"/"+folderName
+    val folderPath = "/opt/"+folderName
     new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
