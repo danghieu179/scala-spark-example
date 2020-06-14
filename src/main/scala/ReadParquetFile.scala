@@ -15,7 +15,7 @@ object ReadParquetFile {
     { 
       // Read file from input
       pathFile = args(0)
-      val parquetFileDF =  spark.read.parquet("file://"+args(0))
+      val parquetFileDF =  spark.read.parquet(args(0))
       //Parquet files can also be registered as tables and then used in SQL statements.
       parquetFileDF.createOrReplaceTempView("parquetFile")
     }
