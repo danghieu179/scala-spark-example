@@ -11,7 +11,6 @@ object ReadParquetFile {
     }
     val spark = SparkSession.builder.appName("Read Parquet File Application").getOrCreate()
     var pathFile = ""
-    println(args(0))
     try
     { 
       // Read file from input
@@ -33,13 +32,11 @@ object ReadParquetFile {
     val fileName = Paths.get(pathFile).getFileName          
     val folderName = fileName.toString.split("\\.")(0)
     // Create new folder for contain report files
-    // val currentDirectory = new java.io.File(".").getCanonicalPath
-    // write to hdfs
+    // define path hdfs
     val folderPath = "hdfs:///user/hadoop/"+folderName
-    // new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
-    // totalUser(folderPath, spark)
+    totalUser(folderPath, spark)
     sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
@@ -59,7 +56,6 @@ object ReadParquetFile {
     var outputFileName = newFolder + "/temp_" + fileName 
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
-    // userByGender.write.format("csv").mode("overwrite").save("hdfs:///user/hadoop/userdata")
     // add header and create file csv
     headerDF.union(userByGender).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/gender")
     // merge file csv
@@ -129,8 +125,6 @@ object ReadParquetFile {
     val output = fs.create(new Path(newFolder+"/total_user.txt"))
     val writer = new PrintWriter(output)
     writer.write(result)
-    // val pw = new PrintWriter(new File("file:///home/hadoop"+"/"+"total_user.txt"))
-    // pw.write(result)
     writer.close
   }
 
