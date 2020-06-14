@@ -38,9 +38,9 @@ object ReadParquetFile {
     new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
-    // totalUser(folderPath, spark)
-    sumGender(folderPath, spark)
-    sumAge(folderPath, spark)
+    totalUser(folderPath, spark)
+    // sumGender(folderPath, spark)
+    // sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
   }
@@ -123,7 +123,7 @@ object ReadParquetFile {
     val totalUser = spark.sql("SELECT count(registration_dttm) as total_user FROM parquetFile").first()
     val result =  "Total user registered: " + totalUser.get(0)
     // create text file and write result to it
-    val pw = new PrintWriter(new File(newFolder+"/"+"total_user.txt"))
+    val pw = new PrintWriter(new File("file:///home/hadoop"+"/"+"total_user.txt"))
     pw.write(result)
     pw.close
   }
