@@ -40,7 +40,7 @@ object ReadParquetFile {
     println(folderPath)
     // run function compute
     // totalUser(folderPath, spark)
-    sumGender(folderPath, spark)
+    // sumGender(folderPath, spark)
     sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
@@ -109,7 +109,7 @@ object ReadParquetFile {
     //create header for csv
     val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")
     // delete file if existed
-    new File(newFolder+"/"+"merged_total_user_by_age.csv").delete()
+    // new File(newFolder+"/"+"merged_total_user_by_age.csv").delete()
     var fileName = "total_user_by_age.csv"
     var outputFileName = newFolder + "/temp_" + fileName 
     var mergedFileName = newFolder + "/merged_" + fileName
