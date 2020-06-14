@@ -34,8 +34,8 @@ object ReadParquetFile {
     val folderName = fileName.toString.split("\\.")(0)
     // Create new folder for contain report files
     val currentDirectory = new java.io.File(".").getCanonicalPath
-    val folderPath = "/home/hadoop/"+folderName
-    new java.io.File(folderPath).mkdirs
+    val folderPath = "hdfs:///user/hadoop/"+folderName
+    // new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
     totalUser(folderPath, spark)
@@ -125,7 +125,7 @@ object ReadParquetFile {
     // create text file and write result to it
     val conf = new Configuration()
     val fs= FileSystem.get(conf)
-    val output = fs.create(new Path("hdfs:///user/hadoop/output/sample.txt"))
+    val output = fs.create(new Path(newFolder+"/total_user.txt"))
     val writer = new PrintWriter(output)
     writer.write(result)
     // val pw = new PrintWriter(new File("file:///home/hadoop"+"/"+"total_user.txt"))
