@@ -33,13 +33,14 @@ object ReadParquetFile {
     val fileName = Paths.get(pathFile).getFileName          
     val folderName = fileName.toString.split("\\.")(0)
     // Create new folder for contain report files
-    val currentDirectory = new java.io.File(".").getCanonicalPath
+    // val currentDirectory = new java.io.File(".").getCanonicalPath
+    // write to hdfs
     val folderPath = "hdfs:///user/hadoop/"+folderName
     // new java.io.File(folderPath).mkdirs
     println(folderPath)
     // run function compute
-    totalUser(folderPath, spark)
-    // sumGender(folderPath, spark)
+    // totalUser(folderPath, spark)
+    sumGender(folderPath, spark)
     // sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
@@ -53,10 +54,10 @@ object ReadParquetFile {
     //create header for csv
     val headerDF = Seq(("gender", "reg_count")).toDF("gender", "reg_count")
     // delete file if existed
-    new File(newFolder+"/"+"merged_total_user_by_gender.csv").delete()
+    // new File(newFolder+"/"+"merged_total_user_by_gender.csv").delete()
     var fileName = "total_user_by_gender.csv"
-    var outputFileName = newFolder + "/temp_" + fileName 
-    var mergedFileName = newFolder + "/merged_" + fileName
+    var outputFileName = newFolder + "temp_" + fileName 
+    var mergedFileName = newFolder + "merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
     headerDF.union(userByGender).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "false").save(outputFileName)
