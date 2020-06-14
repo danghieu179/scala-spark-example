@@ -38,8 +38,8 @@ On URL master
  Example: `hdfs dfs -put /scala-spark-example/data_sample/userdata1.parquet datauser`
 2. Run `spark-submit  --deploy-mode cluster  --class "ReadParquetFile" <path to jar file> "<path hdfs file data>"
  - Example `spark-submit  --deploy-mode cluster  --class "ReadParquetFile" /opt/scala-spark-example/target/scala-2.12/read-parquet-file_2.12-1.0.jar "hdfs:///user/hadoop/datauser/userdata3.parquet"`
-3. Result will save on hdfs of node-master
- - Folder will have same with file name
+3. Result will save on folder hdfs of node-master
+ - Folder contain result will have same with input file name
  ![Screen Shot 7](evidence/evidence-7.png)
  ![Screen Shot 8](evidence/evidence-8.png)
  
