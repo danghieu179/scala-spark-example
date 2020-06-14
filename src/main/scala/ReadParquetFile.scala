@@ -41,7 +41,7 @@ object ReadParquetFile {
     // run function compute
     // totalUser(folderPath, spark)
     // sumGender(folderPath, spark)
-    sumAge(folderPath, spark)
+    // sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
   }
