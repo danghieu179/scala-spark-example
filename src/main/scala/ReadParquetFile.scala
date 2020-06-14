@@ -116,7 +116,7 @@ object ReadParquetFile {
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    // headerDF.union(userByAge).write.format("csv").mode("overwrite").option("header", "false").save("hdfs:///user/hadoop/userdata")
+    headerDF.union(userByAge).write.format("csv").mode("overwrite").option("header", "false").save("hdfs:///user/hadoop/userdata")
     // merge file csv
     // merge(mergeFindGlob, mergedFileName )
     // userByAge.unpersist()
