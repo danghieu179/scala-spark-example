@@ -56,14 +56,14 @@ object ReadParquetFile {
     // delete file if existed
     // new File(newFolder+"/"+"merged_total_user_by_gender.csv").delete()
     var fileName = "total_user_by_gender.csv"
-    var outputFileName = newFolder + "temp_" + fileName 
-    var mergedFileName = newFolder + "merged_" + fileName
+    var outputFileName = newFolder + "/temp_" + fileName 
+    var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    headerDF.union(userByGender).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "false").save(outputFileName)
+    headerDF.union(userByGender).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "false").save("/userdata1")
     // merge file csv
-    merge(mergeFindGlob, mergedFileName )
-    userByGender.unpersist()
+    // merge(mergeFindGlob, mergedFileName )
+    // userByGender.unpersist()
   }
 
   def sumAge(newFolder: String, spark: SparkSession): Unit = {
