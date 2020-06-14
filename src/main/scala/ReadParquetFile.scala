@@ -123,9 +123,14 @@ object ReadParquetFile {
     val totalUser = spark.sql("SELECT count(registration_dttm) as total_user FROM parquetFile").first()
     val result =  "Total user registered: " + totalUser.get(0)
     // create text file and write result to it
-    val pw = new PrintWriter(new File("file:///home/hadoop"+"/"+"total_user.txt"))
-    pw.write(result)
-    pw.close
+    val conf = new Configuration()
+    val fs= FileSystem.get(conf)
+    val output = fs.create(new Path("hdfs:///user/hadoop/output/sample.txt"))
+    val writer = new PrintWriter(output)
+    writer.write(result)
+    // val pw = new PrintWriter(new File("file:///home/hadoop"+"/"+"total_user.txt"))
+    // pw.write(result)
+    writer.close
   }
 
   def merge(srcPath: String, dstPath: String): Unit =  {
