@@ -59,6 +59,7 @@ object ReadParquetFile {
     var outputFileName = newFolder + "/temp_" + fileName 
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
+    userByGender.write.format("csv").mode("overwrite").save("hdfs:///user/hadoop/userdata")
     // add header and create file csv
     // headerDF.union(userByGender).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "false").save("/userdata1")
     // merge file csv
