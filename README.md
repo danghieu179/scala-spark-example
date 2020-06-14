@@ -24,3 +24,4 @@ On URL master
 ![Screen Shot 4](evidence/evidence-4.png)
 ![Screen Shot 5](evidence/evidence-5.png)
 ![Screen Shot 6](evidence/evidence-6.png)
+## How to run with spark-submit on Yarn node cluster
