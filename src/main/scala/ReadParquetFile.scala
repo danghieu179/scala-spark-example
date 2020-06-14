@@ -28,10 +28,9 @@ object ReadParquetFile {
         return println(s"Error: $error")
       }
     }
-    // // Convert the path string to a Path object and get the "base name" from that path.
+    // Convert the path string to a Path object and get the "base name" from that path.
     val fileName = Paths.get(pathFile).getFileName          
     val folderName = fileName.toString.split("\\.")(0)
-    // Create new folder for contain report files
     // define path hdfs
     val folderPath = "hdfs:///user/hadoop/"+folderName
     println(folderPath)
@@ -50,12 +49,11 @@ object ReadParquetFile {
     """)
     //create header for csv
     val headerDF = Seq(("gender", "reg_count")).toDF("gender", "reg_count")
-    // delete file if existed
-    // new File(newFolder+"/"+"merged_total_user_by_gender.csv").delete()
-    var fileName = "total_user_by_gender.csv"
-    var outputFileName = newFolder + "/temp_" + fileName 
-    var mergedFileName = newFolder + "/merged_" + fileName
-    var mergeFindGlob  = outputFileName
+
+    // var fileName = "total_user_by_gender.csv"
+    // var outputFileName = newFolder + "/temp_" + fileName 
+    // var mergedFileName = newFolder + "/merged_" + fileName
+    // var mergeFindGlob  = outputFileName
     // add header and create file csv
     headerDF.union(userByGender).coalesce(1).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/gender")
     // merge file csv
@@ -103,12 +101,10 @@ object ReadParquetFile {
     )
     //create header for csv
     val headerDF = Seq(("age_range", "reg_count")).toDF("age_range", "reg_count")
-    // delete file if existed
-    // new File(newFolder+"/"+"merged_total_user_by_age.csv").delete()
-    var fileName = "total_user_by_age.csv"
-    var outputFileName = newFolder + "/temp_" + fileName 
-    var mergedFileName = newFolder + "/merged_" + fileName
-    var mergeFindGlob  = outputFileName
+    // var fileName = "total_user_by_age.csv"
+    // var outputFileName = newFolder + "/temp_" + fileName 
+    // var mergedFileName = newFolder + "/merged_" + fileName
+    // var mergeFindGlob  = outputFileName
     // add header and create file csv
     headerDF.union(userByAge).coalesce(1).write.format("csv").mode("overwrite").option("header", "false").save(newFolder+"/age")
     // merge file csv
@@ -128,11 +124,11 @@ object ReadParquetFile {
     writer.close
   }
 
-  def merge(srcPath: String, dstPath: String): Unit =  {
-    val hadoopConfig = new Configuration()
-    val hdfs = FileSystem.get(hadoopConfig)
-    FileUtil.copyMerge(hdfs, new Path(srcPath), hdfs, new Path(dstPath), true, hadoopConfig, null) 
-    // the "true" setting deletes the source files once they are merged into the new output
-  }
+  // def merge(srcPath: String, dstPath: String): Unit =  {
+  //   val hadoopConfig = new Configuration()
+  //   val hdfs = FileSystem.get(hadoopConfig)
+  //   FileUtil.copyMerge(hdfs, new Path(srcPath), hdfs, new Path(dstPath), true, hadoopConfig, null) 
+  //   // the "true" setting deletes the source files once they are merged into the new output
+  // }
 }
 
