@@ -41,7 +41,7 @@ object ReadParquetFile {
     // run function compute
     // totalUser(folderPath, spark)
     sumGender(folderPath, spark)
-    // sumAge(folderPath, spark)
+    sumAge(folderPath, spark)
     spark.catalog.dropTempView("parquetFile")
     spark.stop()
   }
@@ -115,10 +115,10 @@ object ReadParquetFile {
     var mergedFileName = newFolder + "/merged_" + fileName
     var mergeFindGlob  = outputFileName
     // add header and create file csv
-    headerDF.union(userByAge).write.mode("overwrite").format("com.databricks.spark.csv").option("header", "false").save(outputFileName)
+    headerDF.union(userByAge).write.mode("overwrite").format("csv").option("header", "false").save("hdfs:///user/hadoop/userdata")
     // merge file csv
-    merge(mergeFindGlob, mergedFileName )
-    userByAge.unpersist()
+    // merge(mergeFindGlob, mergedFileName )
+    // userByAge.unpersist()
   }
 
   def totalUser(newFolder: String, spark: SparkSession): Unit = {
